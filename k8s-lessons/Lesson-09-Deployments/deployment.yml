@@ -1,21 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: frontend
-    name: frontend
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: frontend
-  template:
-    metadata:
-      labels:
-        app: frontend
-        project: cia
-    spec:
-      containers:
-        - image: gmrakk/sample-api:latest
-          imagePullPolicy: IfNotPresent
-          name: frontend
+---
+template:
+  metadata:
+    labels:
+      project: cia
+  spec:
+    containers:
+      - image: gmrakk/sample-api:latest
+        imagePullPolicy: IfNotPresent
+        name: frontend
