@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name : jenkins
-          image: jenkins:2.60.3
+          image: jenkins/jenkins
           ports:
             - containerPort: 8080
