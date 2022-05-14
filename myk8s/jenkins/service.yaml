@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: jenkins-service
   labels:
-    env  : prod
+    app: jenkins
 spec:
   type: NodePort
   selector:
-    project: jenkins
+    app: jenkins
   ports:
     - name      : jenkins
       protocol  : TCP
