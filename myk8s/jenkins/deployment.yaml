@@ -3,15 +3,15 @@ kind: Deployment
 metadata:
   name: jenkins
   labels:
-    app : jenkins
+    project: jenkins
 spec:
   selector:
     matchLabels:
-      project: jenkins
+      app: jenkins
   template:
     metadata:
       labels:
-        project: jenkins
+        app: jenkins
     spec:
       containers:
         - name : jenkins
