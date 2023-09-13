@@ -1,0 +1,47 @@
+---
+- hosts: k8cluster
+  remote_user: root
+
+  tasks:
+    - name: install pre-requisites
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: install pre-requisites
+      pip:
+        name:
+          - pyyaml
+          - kubernetes
+        state: present
+
+    - name: Create a k8s namespace
+      kubernetes.core.k8s:
+        name: '{{ namespace }}'
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Create source dir
+      file:
+        path: '~/grafana'
+        state: directory
+
+    # Copying the Pod.yaml and deployment.yaml in the remote node.
+    - name: "Copying files"
+      template:
+        src: '../../grafana/{{ item }}.yaml'
+        dest: '~/grafana/{{ item }}.yaml'
+      loop:
+        - 'deployment'
+        - 'service'
+
+    - name: Create deployment
+      k8s:
+        state: present
+        src: '~/grafana/deployment.yaml'
+
+    - name: Create service
+      k8s:
+        state: present
+        src: '~/grafana/service.yaml'
