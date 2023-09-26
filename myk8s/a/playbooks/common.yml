@@ -1,0 +1,23 @@
+---
+- hosts: k8cluster
+  remote_user: root
+
+  tasks:
+    - name: install pre-requisites
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: install pre-requisites
+      pip:
+        name:
+          - pyyaml
+          - kubernetes
+        state: present
+
+    - name: Create a k8s namespace
+      kubernetes.core.k8s:
+        name: '{{ namespace }}'
+        api_version: v1
+        kind: Namespace
+        state: present

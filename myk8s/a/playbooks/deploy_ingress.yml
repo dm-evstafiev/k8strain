@@ -1,0 +1,27 @@
+---
+- hosts: k8cluster
+  remote_user: root
+
+  tasks:
+    - name: Create dst dir
+      file:
+        path: '~/ingress'
+        state: directory
+
+    - name: "Copying files"
+      template:
+        src: '../../{{ item }}.yaml'
+        dest: '~/ingress/{{ item }}.yaml'
+      loop:
+        - 'ingress'
+        - 'ingress-controller'
+
+    - name: Create deployment
+      k8s:
+        state: present
+        src: '~/ingress/ingress.yaml'
+
+    - name: Create service
+      k8s:
+        state: present
+        src: '~/ingress/ingress-controller.yaml'

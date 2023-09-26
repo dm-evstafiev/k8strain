@@ -2,24 +2,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-nginx
-  namespace: ingress-nginx
+  namespace: '{{ namespace }}'
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-    - host: jenkins.loc
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: jenkins-service
-                port:
-                  number: 8080
+#    - host: jenkins.loc
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: jenkins-service
+#                port:
+#                  number: 8080
 
-    - host: grafana.loc
+    - host: '{{ grafana_url }}'
       http:
         paths:
           - path: /
